@@ -2058,7 +2058,7 @@ async function renderSeongjangwang(){
   await ensureGrowthPrior();
   const grown = awRows().map(function(r){
     const cur = rowAccuracy(r);
-    const prev = growthPrior[r.key];
+    const prev = growthPrior[r.key || sanitizeKey(r.name)]; // 교사 데이터엔 key가 없어 이름으로 재생성
     if(cur===null || prev===undefined || prev===null || isNaN(prev)) return null;
     return { name:r.name, key:r.key, delta: cur - Number(prev) };
   }).filter(Boolean).filter(x=>x.delta>0)
